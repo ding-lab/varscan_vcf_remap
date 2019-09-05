@@ -5,6 +5,4 @@ For development and testing purposes, this project ships with test data and demo
 
 Docker image: dinglab2/dnp\_filter:20190905
 
-Contact: Matt Wyczalkowski (m.wyczalkowski@wustl.edu)
-
-Contact: Houxiang Zhu (houxiang.zhu@wustl.edu)
+Contact: Matt Wyczalkowski (m.wyczalkowski@wustl.edu), Houxiang Zhu (houxiang.zhu@wustl.edu)
