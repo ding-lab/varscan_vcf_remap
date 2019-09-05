@@ -5,6 +5,6 @@ BAM="/data/test.bam"
 THRESHOLD=0.5
 OUT="DNP_combined.vcf"
 
-python /opt/dnp_filter/src/DNP_filter_v2.py --input $VCF --bam $BAM --threshold $THRESHOLD --output $OUT
+python /opt/dnp_filter/src/DNP_filter.py --input $VCF --bam $BAM --threshold $THRESHOLD --output $OUT
 
 echo Written to $OUT
