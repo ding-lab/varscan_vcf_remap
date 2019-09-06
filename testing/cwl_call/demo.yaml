@@ -1,0 +1,8 @@
+input:
+  class: File
+  path: ../testing/demo_data/merged.filtered.vcf 
+bam:
+  class: File
+  path: ../testing/demo_data/test.bam 
+threshold: 0.8
+output: "DNP_combined.vcf"
