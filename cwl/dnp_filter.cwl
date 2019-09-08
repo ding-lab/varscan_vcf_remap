@@ -44,3 +44,6 @@ requirements:
   - class: DockerRequirement
     dockerPull: 'dinglab2/dnp_filter:20190905'
   - class: InlineJavascriptRequirement
+  - class: ResourceRequirement
+    ramMin: 2000
+
