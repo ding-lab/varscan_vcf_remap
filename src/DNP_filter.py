@@ -3,6 +3,7 @@ import re
 import argparse
 import pysam
 import sys
+import os
 
 def search_2_snp(vcf_file):
     vcf_reader = vcf.Reader(open(vcf_file, 'r'))
@@ -15,7 +16,7 @@ def search_2_snp(vcf_file):
                 alt_base = re.fullmatch("\[([ATCG])\]", str(record.ALT)).group(1)
                 two_snps = (chrom_pre, pos_pre, ref_pre, alt_pre_base, record.CHROM, record.POS, record.REF, alt_base)
                 snps_list.append(two_snps)
-                print("{} are two adjacent SNPs found from the input VCF file {}.".format(two_snps, vcf_file), file=sys.stderr)
+                print("{} are two adjacent SNPs found from the input VCF file.".format(two_snps), file=sys.stderr)
                 chrom_pre, pos_pre, ref_pre, alt_pre = record.CHROM, record.POS, record.REF, record.ALT
             else:
                 chrom_pre, pos_pre, ref_pre, alt_pre = record.CHROM, record.POS, record.REF, record.ALT
@@ -154,11 +155,19 @@ if __name__ == "__main__":
     parser.add_argument("-o", "--output", type=str, dest="output_file", help="output file name")
     args = parser.parse_args()
 
+    abs_path_vcf = os.path.abspath(args.vcf_file)
+    abs_path_bam = os.path.abspath(args.bam_file)
+    abs_path_output = os.path.abspath(args.output_file)
+    print("Input VCF: {}".format(abs_path_vcf), file=sys.stderr)
+    print("Input BAM: {}".format(abs_path_bam), file=sys.stderr)
+    print("Output VCF: {}".format(abs_path_output), file=sys.stderr)
+
+
     snps_list = search_2_snp(args.vcf_file)
 
     if len(snps_list) == 0:
         combine_2_snp([], args.vcf_file, args.output_file, args.threshold_value)
-        print("There is no two adjacent SNPs in the input VCF file {}.\nNo DNP combination was did, but DNP INFO and FILTER headers were added to the output file: {}".format(args.vcf_file, args.output_file), file=sys.stderr)
+        print("There is no two adjacent SNPs in the input VCF file.\nNo DNP combination was did, but DNP INFO and FILTER headers were added to the output VCF file", file=sys.stderr)
 
     else:
         dnps_list = list()
@@ -168,7 +177,8 @@ if __name__ == "__main__":
                 dnps_list.append(dnp)
         if len(dnps_list) == 0:      
             combine_2_snp([], args.vcf_file, args.output_file, args.threshold_value)
-            print("No DNP combination was did, but DNP INFO and FILTER headers were added to the output file: {}".format(args.output_file), file=sys.stderr)
+            print("No DNP combination was did, but DNP INFO and FILTER headers were added to the output VCF file", file=sys.stderr)
         else:
             combine_2_snp(dnps_list, args.vcf_file, args.output_file, args.threshold_value)
-            print("Passed two adjacent SNPs are combined to DNPs, and DNP INFO and FILTER headers were added to the output file: {}".format(args.output_file), file=sys.stderr)
+            print("Passed two adjacent SNPs are combined to DNPs, and DNP INFO and FILTER headers were added to the output VCF file", file=sys.stderr)
+
