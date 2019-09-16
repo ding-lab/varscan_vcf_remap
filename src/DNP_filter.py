@@ -16,7 +16,7 @@ def search_2_snp(vcf_file):
                 alt_base = re.fullmatch("\[([ATCG])\]", str(record.ALT)).group(1)
                 two_snps = (chrom_pre, pos_pre, ref_pre, alt_pre_base, record.CHROM, record.POS, record.REF, alt_base)
                 snps_list.append(two_snps)
-                print("{} are two adjacent SNPs found from the input VCF file.".format(two_snps), file=sys.stderr)
+                print(two_snps, file=sys.stderr)
                 chrom_pre, pos_pre, ref_pre, alt_pre = record.CHROM, record.POS, record.REF, record.ALT
             else:
                 chrom_pre, pos_pre, ref_pre, alt_pre = record.CHROM, record.POS, record.REF, record.ALT
@@ -72,11 +72,11 @@ def validate_2_snp(bam_file, chrom, snp1_pos, snp1_ref, snp1_alt, snp2_pos, snp2
     total_read_num = forward_NN + forward_NM + forward_MN + forward_MM + forward_OT + reverse_NN + reverse_NM + reverse_MN + reverse_MM + reverse_OT
     if total_read_num != 0 and dnp_read_num/total_read_num > threshold_value:
         dnp = (chrom, snp1_pos, snp2_pos)
-        print("{} passed the DNP threshold: {} with supported DNP reads number: {} and total reads number: {}.".format(dnp, threshold_value, dnp_read_num, total_read_num), file=sys.stderr)
+        print("{}: total reads = {}, reads supporting DNP = {}. PASS".format(dnp, total_read_num, dnp_read_num), file=sys.stderr)
         return dnp
     else:
         dnp = (chrom, snp1_pos, snp2_pos)
-        print("{} did not pass the DNP threshold: {} with supported DNP reads number: {} and total reads number: {}.".format(dnp, threshold_value, dnp_read_num, total_read_num), file=sys.stderr)
+        print("{}: total reads = {}, reads supporting DNP = {}. NOT PASS".format(dnp, total_read_num, dnp_read_num), file=sys.stderr)
         return
 
 def is_snp1(dnp_list, chrom, pos):
@@ -161,15 +161,15 @@ if __name__ == "__main__":
     print("Input VCF: {}".format(abs_path_vcf), file=sys.stderr)
     print("Input BAM: {}".format(abs_path_bam), file=sys.stderr)
     print("Output VCF: {}".format(abs_path_output), file=sys.stderr)
-
+    print("DNP threshold: {}".format(args.threshold_value), file=sys.stderr)
+    print("Adjacent SNPs in the input VCF:", file=sys.stderr)
 
     snps_list = search_2_snp(args.vcf_file)
 
     if len(snps_list) == 0:
         combine_2_snp([], args.vcf_file, args.output_file, args.threshold_value)
-        print("There is no two adjacent SNPs in the input VCF file.\nNo DNP combination was did, but DNP INFO and FILTER headers were added to the output VCF file", file=sys.stderr)
-
     else:
+        print("Analyzing reads supporting DNP:", file=sys.stderr)
         dnps_list = list()
         for element in snps_list:
             dnp = validate_2_snp(args.bam_file, element[0], int(element[1]), element[2], element[3], int(element[5]), element[6], element[7], args.threshold_value)
@@ -177,8 +177,6 @@ if __name__ == "__main__":
                 dnps_list.append(dnp)
         if len(dnps_list) == 0:      
             combine_2_snp([], args.vcf_file, args.output_file, args.threshold_value)
-            print("No DNP combination was did, but DNP INFO and FILTER headers were added to the output VCF file", file=sys.stderr)
         else:
             combine_2_snp(dnps_list, args.vcf_file, args.output_file, args.threshold_value)
-            print("Passed two adjacent SNPs are combined to DNPs, and DNP INFO and FILTER headers were added to the output VCF file", file=sys.stderr)
 
