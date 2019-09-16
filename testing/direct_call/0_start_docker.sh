@@ -1,4 +1,4 @@
-IMAGE="dinglab2/dnp_filter:20190905"
+IMAGE="dinglab2/dnp_filter:20190916"
 DATD="../demo_data"
 
 # Using python to get absolute path of DATD.  On Linux `readlink -f` works, but on Mac this is not always available

@@ -42,7 +42,7 @@ outputs:
 label: DNP_filter
 requirements:
   - class: DockerRequirement
-    dockerPull: 'dinglab2/dnp_filter:20190905'
+    dockerPull: 'dinglab2/dnp_filter:20190916'
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
     ramMin: 2000
