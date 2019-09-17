@@ -39,7 +39,7 @@ def validate_2_snp(bam_file, chrom, snp1_pos, snp1_ref, snp1_alt, snp2_pos, snp2
                 if (t[1] == snp2_pos - 1):
                     read_index2 = t[0]
             if x.is_reverse: #check if the read is in the reverse strand
-                if read_index1 != "None" and read_index2 != "None":
+                if read_index1 != None and read_index2 != None:
                     two_bases = query_sequence[read_index1] + query_sequence[read_index2]
                     if two_bases == snp1_ref + snp2_ref:
                         reverse_NN = reverse_NN + 1
@@ -54,7 +54,7 @@ def validate_2_snp(bam_file, chrom, snp1_pos, snp1_ref, snp1_alt, snp2_pos, snp2
                 else:
                     reverse_OT = reverse_OT + 1
             else:
-                if read_index1 != "None" and read_index2 != "None":
+                if read_index1 != None and read_index2 != None:
                     two_bases = query_sequence[read_index1] + query_sequence[read_index2]
                     if two_bases == snp1_ref + snp2_ref:
                         forward_NN = forward_NN + 1
@@ -172,11 +172,11 @@ if __name__ == "__main__":
         print("Analyzing reads supporting DNP:", file=sys.stderr)
         dnps_list = list()
         for element in snps_list:
-            dnp = validate_2_snp(args.bam_file, element[0], int(element[1]), element[2], element[3], int(element[5]), element[6], element[7], args.threshold_value)
+            CHROM, snp1_POS, snp1_REF, snp1_ALT, snp2_POS, snp2_REF, snp2_ALT = element[0], int(element[1]), element[2], element[3], int(element[5]), element[6], element[7] 
+            dnp = validate_2_snp(args.bam_file, CHROM, snp1_POS, snp1_REF, snp1_ALT, snp2_POS, snp2_REF, snp2_ALT, args.threshold_value)
             if dnp != None:
                 dnps_list.append(dnp)
         if len(dnps_list) == 0:      
             combine_2_snp([], args.vcf_file, args.output_file, args.threshold_value)
         else:
             combine_2_snp(dnps_list, args.vcf_file, args.output_file, args.threshold_value)
-
