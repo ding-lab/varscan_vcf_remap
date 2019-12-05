@@ -1,5 +1,63 @@
-merged.filtered.vcf:the VCF immediately after merging, before annotation, from /diskmnt/Projects/cptac\_scratch/CPTAC3\_analysis/adhoc/C3L-02219/merged.filtered.vcf
+merged.filtered.for\_test\_DNP\_TNP\_ONP.vcf:the VCF immediately after merging, which is modified based on /diskmnt/Projects/cptac\_scratch/CPTAC3\_analysis/adhoc/C3L-02219/merged.filtered.vcf for identifying DNP, TNP, and ONP. Specifically, 10 cases of multiple adjacent SNPs are included in the VCF file with REF C and ALT A for each SNP: 
+(1) chr1: 2406475, 2406476 
+(2) chr1: 52756481, 52756482 
+(3) chr4: 56314271, 56314272 
+(4) chr1: 100720466, 100720467, 100720468 
+(5) chr1: 145918599, 145918600, 145918601 
+(6) chr4: 106046684, 106046685, 106046686 
+(7) chr1: 176175987, 176175988, 176175989, 176175990 
+(8) chr4: 154796954, 154796955, 154796956, 154796957 
+(9) chr4: 166025196, 166025197, 166025198, 166025199 
+(10) chr4: 182601095, 182601096, 182601097, 182601098
 
-test.bam:the test bam file, from part of the original file /diskmnt/Projects/cptac\_downloads\_7/GDC\_import/data/e6421728-d85a-488a-ac5a-66b304de7588/8c0016cb-0881-4ed7-b781-e1ec7987cd27\_wxs\_gdc\_realn.bam, only containing reads that cover postion 145918595 - 145918605 of chr1
+synthetic.BWA.bam: the test bam file, which is synthesized by using BreakPointSurveyor (https://github.com/ding-lab/BreakPointSurveyor). Specifically, we used the SyntheticBAM programs of the Synthetic branch to synthesize the BAM file. 
+First, we downloaded 10 segments of the GRCh38 human genome which contain the above 10 cases of multiple adjacent SNPs, respectively: 
+SEG1="chr1:2406401,2407400"
+SEG2="chr1:52756401,52757400"
+SEG3="chr4:56314201,56315200"
+SEG4="chr1:100720401,100721400"
+SEG5="chr1:145918501,145919500"
+SEG6="chr4:106046601,106047600"
+SEG7="chr1:176175901,176176900"
+SEG8="chr4:154796901,154797900"
+SEG9="chr4:166025101,166026100"
+SEG10="chr4:182601001,182602000"
+Second, we manually modified the base info of each segment based on the locations of adjacent SNPs. To simulate the number of different molecules, we copy the above segments to specific numbers, mostly 2 copies:
+(1) chr1: 2406475, 2406476 
+    SEG1_copy1: A, C
+    SEG1_copy2: C, A		     
+(2) chr1: 52756481, 52756482
+    SEG2_copy1: A, A
+    SEG2_copy2: C, C 
+(3) chr4: 56314271, 56314272 
+    SEG3_copy1: A, A
+    SEG3_copy2: A, A
+    SEG3_copy3: A, C
+(4) chr1: 100720466, 100720467, 100720468
+    SEG4_copy1: A, A, A
+    SEG4_copy2: C, C, C 
+(5) chr1: 145918599, 145918600, 145918601 
+    SEG5_copy1: A, C, A
+    SEG5_copy2: C, A, C
+(6) chr4: 106046684, 106046685, 106046686 
+    SEG6_copy1: A, A, C
+    SEG6_copy2: C, C, A 
+(7) chr1: 176175987, 176175988, 176175989, 176175990
+    SEG7_copy1: A, A, A, A
+    SEG7_copy2: C, C, C, C 
+(8) chr4: 154796954, 154796955, 154796956, 154796957
+    SEG8_copy1: A, C, A, C
+    SEG8_copy2: C, A, C, A 
+(9) chr4: 166025196, 166025197, 166025198, 166025199
+    SEG9_copy1: A, A, A, C
+    SEG9_copy2: C, C, C, A 
+(10) chr4: 182601095, 182601096, 182601097, 182601098
+    SEG10_copy1: A, A, A, C
+    SEG10_copy2: A, A, A, C
+    SEG10_copy3: C, C, A, A
+Third, we used wgsim (distributed with samtools) to generate synthetic (simulated) reads against the above segments.
+Forth, we used BWA to realign these reads to a reference which contains chr1 and chr4. This then generates the  BAM file "synthetic.BWA.bam", which is used for testng
 
-test.bam.bai:the index file of test.bam
+
+synthetic.BWA.bam:the index file of synthetic.BWA.bam
+
