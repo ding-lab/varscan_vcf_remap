@@ -198,7 +198,7 @@ def is_secondTOend_snp(mnp_list, chrom, pos):
       
 
 def combine_multiple_snp(mnp_list, vcf_file, output_file):
-    first_snp_chrom = first_snp_pos = first_snp_id = mnp_ref = mnp_alt = first_snp_qual = first_snp_filter = first_snp_info = set_value = ""
+    first_snp_chrom = first_snp_pos = first_snp_id = mnp_ref = mnp_alt = first_snp_qual = first_snp_filter = first_snp_info = first_snp_format = first_snp_normal = first_snp_tumor = set_value = ""
     vcf_file = open(vcf_file, 'r', encoding = 'utf-8') 
     vcf_content = vcf_file.readlines()
     vcf_content_dict = {}
@@ -260,7 +260,7 @@ def combine_multiple_snp(mnp_list, vcf_file, output_file):
                 snp_info = re.split("\t", line)
 
                 if is_first_snp(mnp_list, snp_info[0], snp_info[1]):
-                    first_snp_chrom, first_snp_pos, first_snp_id, first_snp_qual, first_snp_filter, first_snp_info = snp_info[0], snp_info[1], snp_info[2], snp_info[5], snp_info[6], snp_info[7]
+                    first_snp_chrom, first_snp_pos, first_snp_id, first_snp_qual, first_snp_filter, first_snp_info, first_snp_format, first_snp_normal, first_snp_tumor = snp_info[0], snp_info[1], snp_info[2], snp_info[5], snp_info[6], snp_info[7], snp_info[8], snp_info[9], snp_info[10]
                     for mnps in mnp_list:
                         if str(snp_info[0]) == str(mnps[0]) and int(snp_info[1]) == int(mnps[1][0]):
                             pos_list = mnps[1]
@@ -291,10 +291,10 @@ def combine_multiple_snp(mnp_list, vcf_file, output_file):
                         variant_type = "TNP"
                     elif mnp_ref_length > 3:
                         variant_type = "ONP"
-                    mnp_line = first_snp_chrom + "\t" + first_snp_pos + "\t" + first_snp_id + "\t" + mnp_ref + "\t" + mnp_alt + "\t" + first_snp_qual + "\t" + first_snp_filter + "\t" + first_snp_info + set_value + ";" + variant_type + "\t" + "." + "\t" + "." + "\t" + "." + "\n"
+                    mnp_line = first_snp_chrom + "\t" + first_snp_pos + "\t" + first_snp_id + "\t" + mnp_ref + "\t" + mnp_alt + "\t" + first_snp_qual + "\t" + first_snp_filter + "\t" + first_snp_info + set_value + ";" + variant_type + "\t" + first_snp_format + "\t" + first_snp_normal + "\t" + first_snp_tumor + "\n"
                     combined_vcf_file.write(mnp_line)
-                    #first_snp_chrom = first_snp_pos = first_snp_id = first_snp_ref = first_snp_alt = first_snp_qual = first_snp_filter = first_snp_info = snp2_ref = snp2_alt = snp2_set_value = ""
-                    first_snp_chrom = first_snp_pos = first_snp_id = mnp_ref = mnp_alt = first_snp_qual = first_snp_filter = first_snp_info = set_value = ""
+                    
+                    first_snp_chrom = first_snp_pos = first_snp_id = mnp_ref = mnp_alt = first_snp_qual = first_snp_filter = first_snp_info = first_snp_format = first_snp_normal = first_snp_tumor = set_value = ""
 
 
 
