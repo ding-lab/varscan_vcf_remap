@@ -6,4 +6,4 @@ RUN pip install PyVCF
 RUN pip install argparse
 RUN pip install pysam
 
-COPY . /opt/dnp_filter
+COPY . /opt/mnp_filter

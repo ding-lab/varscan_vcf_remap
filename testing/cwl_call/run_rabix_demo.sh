@@ -1,5 +1,5 @@
 cd ../..
-CWL="cwl/dnp_filter.cwl"
+CWL="cwl/mnp_filter.cwl"
 YAML="testing/cwl_call/demo.yaml"
 
 mkdir -p results

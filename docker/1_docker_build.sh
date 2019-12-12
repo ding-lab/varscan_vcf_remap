@@ -1,4 +1,4 @@
-IMAGE="dinglab2/dnp_filter:20190916"
+IMAGE="dinglab2/mnp_filter:20191211"
 
 cd ..
 docker build -t $IMAGE -f docker/Dockerfile .

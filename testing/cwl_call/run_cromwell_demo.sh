@@ -5,7 +5,7 @@ source /opt/lsf9/conf/lsf.conf
 
 CONFIG="cromwell-config.dat"
 
-CWL="../../cwl/dnp_filter.cwl"
+CWL="../../cwl/mnp_filter.cwl"
 YAML="demo.yaml"
 
 CROMWELL="/opt/cromwell.jar"
