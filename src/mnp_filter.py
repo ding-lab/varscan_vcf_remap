@@ -92,37 +92,40 @@ def validate_multiple_snp(bam_file, adjacent_snps_list):
     samfile = pysam.AlignmentFile(bam_file, "rb")
     iter = samfile.fetch(chrom, start_pos-1, end_pos) #fechch all the reads in the bam file covering the chrom and start to end positions. Within pysam, coordinates are 0-based,half-open intervals. i.e., (10000, 20000),the position 10,000 is part of the interval, but 20,000 is not.
     for x in iter:
-        if x.reference_end < end_pos or x.reference_start + 1 > start_pos: #exclude the reads only cover partially
+        if x.reference_end == None:
             pass
         else:
-            query_sequence = x.query_sequence
-            aligned_pairs = x.get_aligned_pairs(matches_only=False, with_seq=False)
-            read_index_list = []
-
-            i = 0
-            while i < len(pos_list):
-                for t in aligned_pairs:
-                    if t[1] == int(pos_list[i]) - 1:
-                        read_index_list.append(t[0])
-                i += 1
-
-            read_index_list_len = len(read_index_list)
-
-            if None not in read_index_list and read_index_list_len == read_index_list[read_index_list_len - 1] - read_index_list[0] + 1:  #remove reads with indel alignment
-                multiple_bases = ""
-                j = 0
-                while j < len(read_index_list):
-                    multiple_bases = multiple_bases + query_sequence[read_index_list[j]]
-                    j += 1
-                if re.fullmatch(pattern, multiple_bases):
-                    if multiple_bases in pattern_count_dict:
-                        pattern_count_dict[multiple_bases] = pattern_count_dict[multiple_bases] + 1
-                    else:
-                        pattern_count_dict[multiple_bases] = 1
-                else:
-                    OTHER += 1
+            if x.reference_end < end_pos or x.reference_start + 1 > start_pos: #exclude the reads only cover partially
+                pass
             else:
-                OTHER += 1     
+                query_sequence = x.query_sequence
+                aligned_pairs = x.get_aligned_pairs(matches_only=False, with_seq=False)
+                read_index_list = []
+
+                i = 0
+                while i < len(pos_list):
+                    for t in aligned_pairs:
+                        if t[1] == int(pos_list[i]) - 1:
+                            read_index_list.append(t[0])
+                    i += 1
+
+                read_index_list_len = len(read_index_list)
+
+                if None not in read_index_list and read_index_list_len == read_index_list[read_index_list_len - 1] - read_index_list[0] + 1:  #remove reads with indel alignment
+                    multiple_bases = ""
+                    j = 0
+                    while j < len(read_index_list):
+                        multiple_bases = multiple_bases + query_sequence[read_index_list[j]]
+                        j += 1
+                    if re.fullmatch(pattern, multiple_bases):
+                        if multiple_bases in pattern_count_dict:
+                            pattern_count_dict[multiple_bases] = pattern_count_dict[multiple_bases] + 1
+                        else:
+                            pattern_count_dict[multiple_bases] = 1
+                    else:
+                        OTHER += 1
+                else:
+                    OTHER += 1     
 
     if ref_bases in pattern_count_dict:
         ref_bases_number = pattern_count_dict[ref_bases]
