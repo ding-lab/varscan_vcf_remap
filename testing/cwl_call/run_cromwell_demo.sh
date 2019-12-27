@@ -5,7 +5,7 @@ source /opt/lsf9/conf/lsf.conf
 
 CONFIG="cromwell-config.dat"
 
-CWL="../../cwl/mnp_filter.cwl"
+CWL="../../cwl/varscan_vcf_remap.cwl"
 YAML="demo.yaml"
 
 CROMWELL="/opt/cromwell.jar"
