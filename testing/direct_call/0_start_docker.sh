@@ -1,4 +1,4 @@
-IMAGE="dinglab2/mnp_filter:20191211"
+IMAGE="mwyczalkowski/varscan_vcf_remap"
 DATD="../demo_data"
 
 # Using python to get absolute path of DATD.  On Linux `readlink -f` works, but on Mac this is not always available
