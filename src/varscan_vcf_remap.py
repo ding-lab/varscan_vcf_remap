@@ -1,3 +1,8 @@
+
+# Matthew Wyczalkowski
+# m.wyczalkowski@wustl.edu
+# Washington University School of Medicine
+
 import vcf
 import re
 import argparse
