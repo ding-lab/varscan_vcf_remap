@@ -2,8 +2,15 @@ FROM python:3
 
 WORKDIR /opt
 
-RUN pip install PyVCF
-RUN pip install argparse
-RUN pip install pysam
+# newer versions of pysam seem to crash on build.
+# alternative is to start with Bioconductor images, e.g., https://quay.io/repository/biocontainers/pysam?tab=info
+RUN pip install PyVCF argparse pysam==0.15.1
+#RUN pip install argparse
+#pip install Cython
+#RUN pip install pysam
+#pip install pysam==0.15.1
 
-COPY . /opt/mnp_filter
+RUN apt-get update && apt-get install -y \
+    vim
+
+COPY . /opt/varscan_vcf_remap
