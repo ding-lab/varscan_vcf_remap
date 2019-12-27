@@ -1,2 +1,2 @@
-#IMAGE="dinglab2/mnp_filter:20191211"
+IMAGE="mwyczalkowski/varscan_vcf_remap:20191227"
 docker push $IMAGE
