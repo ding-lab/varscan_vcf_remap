@@ -1,9 +1,8 @@
-# Modify the 
+# Wrapper script for running varscan_vcf_remap.py from within docker container
 #
 # Usage:
-#   bash run_merged_filter.sh input.vcf output.vcf [args ...]
+#   bash run_varscan_vcf_remap.sh [args] input.vcf output.vcf 
 # args are zero or more optional arguments:
-#   --bypass_merge and --bypass will skip merge filter
 #   --debug and --debug_merge will print out debug info to STDERR
 # If output.vcf is -, write to stdout
 

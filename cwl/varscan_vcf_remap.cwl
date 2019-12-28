@@ -25,7 +25,7 @@ outputs:
 label: varscan_vcf_remap
 requirements:
   - class: DockerRequirement
-    dockerPull: 'mwyczalkowski/varscan_vcf_remap:20191227'
+    dockerPull: 'mwyczalkowski/varscan_vcf_remap:20191228'
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
     ramMin: 2000
