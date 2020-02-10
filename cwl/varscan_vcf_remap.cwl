@@ -8,14 +8,12 @@ inputs:
   - id: input
     type: File
     inputBinding:
-      position: 0
-      prefix: '--input'
+      position: 1
     label: VCF file
   - id: output
     type: string
     inputBinding:
-      position: 0
-      prefix: '--output'
+      position: 2
     label: output VCF file name
 outputs:
   - id: remapped_VCF
