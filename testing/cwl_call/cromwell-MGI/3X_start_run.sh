@@ -17,7 +17,7 @@ source /opt/lsf9/conf/lsf.conf
 ARGS="-Xmx10g"
 DB_ARGS="-Djavax.net.ssl.trustStorePassword=changeit -Djavax.net.ssl.trustStore=/home/m.wyczalkowski/lib/cromwell-jar/cromwell.truststore"
 CROMWELL_JAR="/usr/local/cromwell/cromwell-47.jar"  # this is in CromwellRunner container
-CWL="../../../cwl/GATK_GermlineCaller.cwl"
+CWL="../../../cwl/varscan_vcf_remap.cwl"
 CONFIG="-Dconfig.file=dat/cromwell-config-db.dat"
 
 /usr/bin/java $ARGS $CONFIG $DB_ARGS -jar $CROMWELL_JAR run -t cwl -i $YAML $CWL
