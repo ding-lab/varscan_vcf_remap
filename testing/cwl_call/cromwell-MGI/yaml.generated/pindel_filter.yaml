@@ -1,0 +1,11 @@
+# the string below is to be replaced with path to output of pindel_caller (full path to pindel_sifted.out)
+pindel_sifted:
+  class: File
+  path: /gscmnt/gc2541/cptac3_analysis/cromwell-workdir/cromwell-executions/pindel_caller.Pindel_GermlineCaller.cwl/11937496-8df4-4f98-a445-b4499aee2c95/call-pindel_caller.Pindel_GermlineCaller.cwl/execution/output/pindel_sifted.out
+reference:
+  class: File
+  path: /gscmnt/gc2521/dinglab/mwyczalk/somatic-wrapper-data/image.data/A_Reference/GRCh38.d1.vd1/GRCh38.d1.vd1.fa
+pindel_config_template:
+  class: File
+  path: ../../../../params/pindel_germline_filter_config.ini
+dryrun: false
