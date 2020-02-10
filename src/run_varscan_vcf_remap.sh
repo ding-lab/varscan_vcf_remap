@@ -35,15 +35,16 @@ test_exit_status
 
 export PYTHONPATH="/opt/varscan_vcf_remap/src:$PYTHONPATH"
 
-MERGE_FILTER="vcf_filter.py --no-filtered --local-script varscan_vcf_remap.py"  # filter module
+#python /opt/varscan_vcf_remap/src/varscan_vcf_remap.py $@ --input $VCF --output $OUT
+MERGE_FILTER="/usr/local/bin/python /opt/varscan_vcf_remap/src/varscan_vcf_remap.py"  # filter module
 
 # exclude variants reported by just one caller
 MERGE_FILTER_ARGS="$XARG" 
 
-CMD="$MERGE_FILTER $VCF $MERGE_FILTER_ARGS"
+CMD="$MERGE_FILTER --input $VCF $MERGE_FILTER_ARGS"
 
 if [ $OUT != '-' ]; then
-    CMD="$CMD > $OUT"
+    CMD="$CMD --output $OUT"
 fi
 
 >&2 echo Running: $CMD

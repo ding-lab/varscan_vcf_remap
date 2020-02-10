@@ -2,8 +2,8 @@ class: CommandLineTool
 cwlVersion: v1.0
 id: varscan_vcf_remap
 baseCommand:
-  - /usr/local/bin/python
-  - /opt/varscan_vcf_remap/src/varscan_vcf_remap.py
+  - /bin/bash
+  - /opt/varscan_vcf_remap/src/run_varscan_vcf_remap.sh
 inputs:
   - id: input
     type: File
@@ -25,7 +25,7 @@ outputs:
 label: varscan_vcf_remap
 requirements:
   - class: DockerRequirement
-    dockerPull: 'mwyczalkowski/varscan_vcf_remap:20191228'
+    dockerPull: 'mwyczalkowski/varscan_vcf_remap:20200210'
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
     ramMin: 2000
