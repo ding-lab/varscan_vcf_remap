@@ -3,3 +3,4 @@ output
 old
 results
 .*.swp
+__pycache__

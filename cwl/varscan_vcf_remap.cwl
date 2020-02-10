@@ -2,8 +2,8 @@ class: CommandLineTool
 cwlVersion: v1.0
 id: varscan_vcf_remap
 baseCommand:
-  - /usr/local/bin/python
-  - /opt/varscan_vcf_remap/src/varscan_vcf_remap.py
+  - /bin/bash
+  - /opt/varscan_vcf_remap/src/run_varscan_vcf_remap.sh
 inputs:
   - id: input
     type: File
