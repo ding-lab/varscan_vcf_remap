@@ -1,2 +1,3 @@
-IMAGE="mwyczalkowski/varscan_vcf_remap:20200210"
+source $DOCKER_IMAGE
+
 docker push $IMAGE

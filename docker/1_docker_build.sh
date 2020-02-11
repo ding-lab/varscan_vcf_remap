@@ -1,4 +1,4 @@
-IMAGE="mwyczalkowski/varscan_vcf_remap:20200210"
+src docker_image.sh
 
 cd ..
 docker build -t $IMAGE -f docker/Dockerfile .
