@@ -1,7 +1,7 @@
 # Wrapper script for running varscan_vcf_remap.py from within docker container
 #
 # Usage:
-#   bash run_varscan_vcf_remap.sh [args] input.vcf output.vcf 
+#   bash run_varscan_vcf_remap.sh input.vcf output.vcf [args]
 # args are zero or more optional arguments:
 #   --debug will print out debug info to STDERR
 #   --germline will run pipeline in germline mode

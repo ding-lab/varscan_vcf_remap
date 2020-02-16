@@ -18,7 +18,7 @@ inputs:
   - id: germline
     type: boolean?
     inputBinding:
-      position: 0
+      position: 99
       prefix: '--germline'
     label: Process varscan germline calls
 outputs:
