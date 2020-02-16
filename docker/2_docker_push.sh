@@ -1,2 +1,2 @@
-source $DOCKER_IMAGE
+source docker_image.sh
 docker push $IMAGE
