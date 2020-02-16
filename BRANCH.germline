@@ -1,0 +1,5 @@
+Germline branch is specific to working with VCFs generated from one sample / BAM file
+Making this code work for both somatic and germline will require a flag and some chanages
+in src/varscan_vcf_remap.py, as described in that file
+
+docker image "mwyczalkowski/varscan_vcf_remap:germline"
