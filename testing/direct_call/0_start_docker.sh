@@ -1,4 +1,4 @@
-IMAGE="mwyczalkowski/varscan_vcf_remap:20200210"
+source ../../docker/docker_image.sh
 DATD="../demo_data"
 
 # Using python to get absolute path of DATD.  On Linux `readlink -f` works, but on Mac this is not always available

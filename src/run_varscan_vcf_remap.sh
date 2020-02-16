@@ -1,10 +1,10 @@
 # Wrapper script for running varscan_vcf_remap.py from within docker container
 #
 # Usage:
-#   bash run_varscan_vcf_remap.sh [args] input.vcf output.vcf 
+#   bash run_varscan_vcf_remap.sh input.vcf output.vcf [args]
 # args are zero or more optional arguments:
-#   --debug and --debug_merge will print out debug info to STDERR
-# If output.vcf is -, write to stdout
+#   --debug will print out debug info to STDERR
+#   --germline will run pipeline in germline mode
 
 VCF=$1; shift
 OUT=$1; shift
@@ -36,12 +36,12 @@ test_exit_status
 export PYTHONPATH="/opt/varscan_vcf_remap/src:$PYTHONPATH"
 
 #python /opt/varscan_vcf_remap/src/varscan_vcf_remap.py $@ --input $VCF --output $OUT
-MERGE_FILTER="/usr/local/bin/python /opt/varscan_vcf_remap/src/varscan_vcf_remap.py"  # filter module
+REMAP_FILTER="/usr/local/bin/python /opt/varscan_vcf_remap/src/varscan_vcf_remap.py"  # filter module
 
 # exclude variants reported by just one caller
-MERGE_FILTER_ARGS="$XARG" 
+REMAP_FILTER_ARGS="$XARG" 
 
-CMD="$MERGE_FILTER --input $VCF $MERGE_FILTER_ARGS"
+CMD="$REMAP_FILTER --input $VCF $REMAP_FILTER_ARGS"
 
 if [ $OUT != '-' ]; then
     CMD="$CMD --output $OUT"

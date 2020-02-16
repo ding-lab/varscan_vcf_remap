@@ -1,4 +1,4 @@
 input:
   class: File
   path: ../../demo_data/varscan_snv_vcf.vcf
-output: "varscan_snv_vcf-remapped.vcf"
+output: "varscan_snv_vcf-somatic_remapped.vcf"

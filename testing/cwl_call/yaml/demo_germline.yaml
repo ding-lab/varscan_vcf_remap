@@ -1,0 +1,7 @@
+# Testing germline call filtering.  For now our demo dataset is not in demo_data directory,
+ 
+input:
+  class: File
+  path: /home/mwyczalk_test/Projects/GermlineCaller/C3L-00001/Varscan.indel.Final.vcf.gz
+germline: true
+output: "Varscan.indel.Final-germline-remapped.vcf"
