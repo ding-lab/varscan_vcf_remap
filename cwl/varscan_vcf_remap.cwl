@@ -15,6 +15,12 @@ inputs:
     inputBinding:
       position: 2
     label: output VCF file name
+  - id: germline
+    type: boolean?
+    inputBinding:
+      position: 0
+      prefix: '--germline'
+    label: Process varscan germline calls
 outputs:
   - id: remapped_VCF
     type: File
@@ -23,7 +29,7 @@ outputs:
 label: varscan_vcf_remap
 requirements:
   - class: DockerRequirement
-    dockerPull: 'mwyczalkowski/varscan_vcf_remap:20200210'
+    dockerPull: 'mwyczalkowski/varscan_vcf_remap:germline'
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
     ramMin: 2000

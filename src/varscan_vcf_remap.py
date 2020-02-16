@@ -38,8 +38,8 @@ import collections
 # the output FORMAT is then GT:GQ:DP:AD:FREQ:DP4
 # 
 
-#New_Call = collections.namedtuple('new_call', ["GT", "GQ", "DP", "AD", "FREQ", "DP4"])
-New_Call = collections.namedtuple('new_call', \
+New_Somatic_Call = collections.namedtuple('new_call', ["GT", "GQ", "DP", "AD", "FREQ", "DP4"])
+New_Germline_Call = collections.namedtuple('new_call', \
         [ "GT", "GQ", "SDP", "DP", "AD", "FREQ", "PVAL", "RBQ", "ABQ", "RDF", "RDR", "ADF", "ADR"])
 
 def modify_meta_info(vcf_reader):
@@ -58,16 +58,20 @@ def modify_meta_info(vcf_reader):
 
     return vcf_reader
 
-def get_new_call(call_data):
-#        CallData(GT=0/0, GQ=None, DP=41, RD=41, AD=0, FREQ=0%, DP4=39,2,0,0)
+def get_new_germline_call(call_data):
     AD="{},{}".format(call_data.RD, call_data.AD)
-    #call=New_Call(call_data.GT, call_data.GQ, call_data.DP, AD, call_data.FREQ, call_data.DP4)
-    call=New_Call(call_data.GT, call_data.GQ, call_data.SDP, call_data.DP, AD, \
+    call=New_Germline_Call(call_data.GT, call_data.GQ, call_data.SDP, call_data.DP, AD, \
                 call_data.FREQ, call_data.PVAL, call_data.RBQ, call_data.ABQ, call_data.RDF, \
                 call_data.RDR, call_data.ADF, call_data.ADR)
     return call
 
-def remap_vcf(f, o, onlywarn=False):
+def get_new_somatic_call(call_data):
+#        CallData(GT=0/0, GQ=None, DP=41, RD=41, AD=0, FREQ=0%, DP4=39,2,0,0)
+    AD="{},{}".format(call_data.RD, call_data.AD)
+    call=New_Somatic_Call(call_data.GT, call_data.GQ, call_data.DP, AD, call_data.FREQ, call_data.DP4)
+    return call
+
+def remap_vcf(f, o, is_germline, onlywarn=False):
     vcf_reader = vcf.Reader(filename=f)
 
 # example VCF line before remapping - somatic
@@ -79,15 +83,14 @@ def remap_vcf(f, o, onlywarn=False):
 #     AD_new = RD_old,AD_old
 #     RD_new - delete it
 
-# these are somatic
-#    Old_Format = "GT:GQ:DP:RD:AD:FREQ:DP4"
-#    New_Format = "GT:GQ:DP:AD:FREQ:DP4"
-# germline:
-    Old_Format = "GT:GQ:SDP:DP:RD:AD:FREQ:PVAL:RBQ:ABQ:RDF:RDR:ADF:ADR"
-    New_Format = "GT:GQ:SDP:DP:AD:FREQ:PVAL:RBQ:ABQ:RDF:RDR:ADF:ADR"
+    if is_germline:
+        Old_Format = "GT:GQ:SDP:DP:RD:AD:FREQ:PVAL:RBQ:ABQ:RDF:RDR:ADF:ADR"
+        New_Format = "GT:GQ:SDP:DP:AD:FREQ:PVAL:RBQ:ABQ:RDF:RDR:ADF:ADR"
+    else: # these are somatic
+        Old_Format = "GT:GQ:DP:RD:AD:FREQ:DP4"
+        New_Format = "GT:GQ:DP:AD:FREQ:DP4"
 
     for record in vcf_reader:
-
         if (record.FORMAT != Old_Format):
             msg="unexpected record FORMAT field : Expected {}  Observed {}".format(Old_Format, record.FORMAT)
              
@@ -97,19 +100,16 @@ def remap_vcf(f, o, onlywarn=False):
                 raise(Exception(msg)) 
 
         record.FORMAT=New_Format
-        #print(record.genotype("NORMAL").data)
 
         # loop over all genotypes so that this code can work for both germline and somatic calls
         for call in record.samples:
             sample_name=call.sample
             sample_data=call.data
-            record.genotype(sample_name).data = get_new_call(sample_data)
-
-#        normal_data=record.genotype("NORMAL").data
-#        record.genotype("NORMAL").data = get_new_call(normal_data)
-#
-#        tumor_data=record.genotype("TUMOR").data
-#        record.genotype("TUMOR").data = get_new_call(tumor_data)
+            if (is_germline):
+                nc = get_new_germline_call(sample_data)
+            else:
+                nc = get_new_somatic_call(sample_data)
+            record.genotype(sample_name).data = nc
 
         vcf_writer.write_record(record)
 
@@ -120,6 +120,7 @@ if __name__ == "__main__":
     parser.add_argument("-i", "--input", dest="infn", help="Input vcf file name")
     parser.add_argument("-o", "--output", dest="outfn", help="Output file name")
     parser.add_argument("-w", "--warn", action="store_true", help="Print warning not error if unexpected value of FORMAT field")
+    parser.add_argument("-G", "--germline", action="store_true", help="Process as germline rather than somatic VCF")
     # No longer accepting stdin as input so that can deal with compressed data; want to pass filename to Reader 
 
     args = parser.parse_args()
@@ -127,5 +128,5 @@ if __name__ == "__main__":
     print("Input VCF: {}".format(args.infn), file=sys.stderr)
     print("Output VCF: {}".format(args.outfn), file=sys.stderr)
 
-    remap_vcf(args.infn, args.outfn, args.warn)
+    remap_vcf(args.infn, args.outfn, args.germline, args.warn)
 
