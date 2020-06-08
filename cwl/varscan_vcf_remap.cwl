@@ -10,11 +10,6 @@ inputs:
     inputBinding:
       position: 1
     label: VCF file
-  - id: output
-    type: string
-    inputBinding:
-      position: 2
-    label: output VCF file name
   - id: germline
     type: boolean?
     inputBinding:
@@ -25,8 +20,12 @@ outputs:
   - id: remapped_VCF
     type: File
     outputBinding:
-      glob: $(inputs.output)
+      glob: varscan-remapped.vcf
 label: varscan_vcf_remap
+arguments:
+  - position: 0
+    prefix: '--output'
+    valueFrom: varscan-remapped.vcf
 requirements:
   - class: DockerRequirement
     dockerPull: 'mwyczalkowski/varscan_vcf_remap:20200216'
