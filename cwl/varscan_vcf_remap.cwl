@@ -15,7 +15,8 @@ inputs:
     inputBinding:
       position: 99
       prefix: '--germline'
-    label: Process varscan germline calls
+    label: germline
+    doc: Process germline varscan calls.  Default: somatic calls
 outputs:
   - id: remapped_VCF
     type: File
