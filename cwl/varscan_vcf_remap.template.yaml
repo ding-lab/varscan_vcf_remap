@@ -1,0 +1,4 @@
+germline: false  # type "boolean" (optional)
+input:  # type "File"
+    class: File
+    path: a/file/path
