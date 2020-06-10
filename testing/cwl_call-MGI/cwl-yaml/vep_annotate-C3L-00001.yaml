@@ -1,0 +1,11 @@
+vep_cache_gz:  # type "File" (optional)
+    class: File
+    path: /gscmnt/gc7202/dinglab/common/databases/VEP/v99/vep-cache.99_GRCh38.tar.gz
+vep_cache_version:      99
+assembly:               GRCh38
+reference_fasta:  # type "File"
+    class: File
+    path: /gscmnt/gc7202/dinglab/common/Reference/A_Reference/GRCh38.d1.vd1/GRCh38.d1.vd1.fa
+input_vcf:  # type "File"
+    class: File
+    path: /gscmnt/gc2508/dinglab/mwyczalk/GermlineCaller.Testing/C3L-00001/merged/filtered.vcf

@@ -1,0 +1,11 @@
+vep_cache_gz:  # type "File" (optional)
+    class: File
+    path: a/file/path
+vep_cache_version: a_string  # type "string" (optional)
+assembly: a_string  # type "string" (optional)
+reference_fasta:  # type "File"
+    class: File
+    path: a/file/path
+input_vcf:  # type "File"
+    class: File
+    path: a/file/path
