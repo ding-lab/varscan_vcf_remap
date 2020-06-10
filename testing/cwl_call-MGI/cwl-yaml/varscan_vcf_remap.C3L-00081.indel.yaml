@@ -1,0 +1,4 @@
+germline: true  # type "boolean" (optional)
+input:  # type "File"
+    class: File
+    path: /gscmnt/gc2541/cptac3_analysis/cromwell-workdir/cromwell-executions/TinJasmine.cwl/ea295a9b-2f90-4ae6-9971-656b9c366a36/call-_varscan__germline_caller/execution/output/Varscan.indel.Final.vcf.gz

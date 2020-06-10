@@ -24,8 +24,7 @@ outputs:
       glob: varscan-remapped.vcf
 label: varscan_vcf_remap
 arguments:
-  - position: 0
-    prefix: '--output'
+  - position: 2
     valueFrom: varscan-remapped.vcf
 requirements:
   - class: DockerRequirement

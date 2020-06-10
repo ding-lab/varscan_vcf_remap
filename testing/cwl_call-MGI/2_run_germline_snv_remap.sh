@@ -5,9 +5,8 @@ source /opt/lsf9/conf/lsf.conf
 
 CONFIG="cromwell-config-db.dat"
 
-CWL="../../cwl/vep_annotate.cwl"
-YAML="cwl-yaml/vep_annotate-C3L-00001.yaml"
-
+CWL="../../cwl/varscan_vcf_remap.cwl"
+YAML="cwl-yaml/varscan_vcf_remap.C3L-00081.snp.yaml"
 
 CROMWELL="/usr/local/cromwell/cromwell-47.jar"
 
