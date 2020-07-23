@@ -1,8 +1,23 @@
+# start docker image with ../demo_data mapped to /data,
+# unless another path is passed on command line.  uses
+# the start_docker.sh script in /docker
+
 source ../../docker/docker_image.sh
-DATD="../demo_data"
 
-# Using python to get absolute path of DATD.  On Linux `readlink -f` works, but on Mac this is not always available
-# see https://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac
-ADATD=$(python -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' $DATD)
+# katmai
+DATA_ROOT="/home/mwyczalk_test/Projects/TinDaisy/testing/C3L-00908-data/dat"
 
-docker run -v $ADATD:/data -it $IMAGE /bin/bash
+# MGI
+# Mounting cromwell-executions
+#CE_ROOT="/gscmnt/gc2541/cptac3_analysis/cromwell-workdir/cromwell-executions"
+#MOUNT="$CE_ROOT:/cromwell-executions"
+
+#VEP_ROOT="/gscmnt/gc7202/dinglab/common/databases/VEP"
+#REF_ROOT="/gscmnt/gc7202/dinglab/common/Reference/A_Reference"
+#DATA_ROOT="/gscmnt/gc2508/dinglab/mwyczalk/GermlineCaller.Testing/C3L-00001"
+#ARGS="-M MGI -P"
+
+MOUNT="$DATA_ROOT:/data"
+
+cd ../.. && bash docker/WUDocker/start_docker.sh $ARGS $@ -I $IMAGE $MOUNT
+
