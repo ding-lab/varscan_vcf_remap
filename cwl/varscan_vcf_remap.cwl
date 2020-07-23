@@ -28,7 +28,7 @@ arguments:
     valueFrom: varscan-remapped.vcf
 requirements:
   - class: DockerRequirement
-    dockerPull: 'mwyczalkowski/varscan_vcf_remap:20200610'
+    dockerPull: 'mwyczalkowski/varscan_vcf_remap:20200723'
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
     ramMin: 2000
