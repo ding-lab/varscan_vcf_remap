@@ -1,4 +1,12 @@
+<<<<<<< 97cdd2d83c8cbbe37a0d8a4913de82cbc9f7245d
 germline: false  # type "boolean" (optional)
 input:  # type "File"
     class: File
     path: /home/mwyczalk_test/Projects/TinDaisy/testing/C3L-00908-data/dat/call-parse_varscan_snv/execution/results/varscan/filter_snv_out/varscan.out.som_snv.Somatic.hc.somfilter_pass.vcf
+=======
+#/gscmnt/gc2541/cptac3_analysis/cromwell-workdir/cromwell-executions/tindaisy-hotspot.cwl/47c63123-dab6-417b-a431-c9aa9589e6e4/results/
+germline: false  # type "boolean" (optional)
+input:  # type "File"
+    class: File
+    path: /gscmnt/gc2541/cptac3_analysis/cromwell-workdir/cromwell-executions/tindaisy-hotspot.cwl/47c63123-dab6-417b-a431-c9aa9589e6e4/results/call-parse_varscan_snv/execution/results/varscan/filter_snv_out/varscan.out.som_snv.Somatic.hc.somfilter_pass.vcf
+>>>>>>> Implementation and testing of somatic filtering on MGI cromwell

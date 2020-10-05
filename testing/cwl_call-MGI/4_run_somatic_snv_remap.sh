@@ -6,7 +6,7 @@ source /opt/lsf9/conf/lsf.conf
 CONFIG="cromwell-config-db.dat"
 
 CWL="../../cwl/varscan_vcf_remap.cwl"
-YAML="cwl-yaml/varscan_vcf_remap.somatic.C3L-00908.snv.yaml"
+YAML="cwl-yaml/varscan_vcf_remap.somatic.C3L-00908.snp.yaml"
 
 CROMWELL="/usr/local/cromwell/cromwell-47.jar"
 
