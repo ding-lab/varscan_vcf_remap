@@ -1,0 +1,4 @@
+germline: false  # type "boolean" (optional)
+input:  # type "File"
+    class: File
+    path: /home/mwyczalk_test/Projects/TinDaisy/testing/C3L-00908-data/dat/call-parse_varscan_snv/execution/results/varscan/filter_snv_out/varscan.out.som_snv.Somatic.hc.somfilter_pass.vcf

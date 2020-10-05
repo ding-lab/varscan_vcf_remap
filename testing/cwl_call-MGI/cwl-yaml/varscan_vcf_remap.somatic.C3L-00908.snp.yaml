@@ -1,0 +1,4 @@
+germline: false  # type "boolean" (optional)
+input:  # type "File"
+    class: File
+    path: /home/mwyczalk_test/Projects/TinDaisy/testing/C3L-00908-data/dat/call-parse_varscan_indel/execution/results/varscan/filter_indel_out/varscan.out.som_indel.Somatic.hc.vcf
